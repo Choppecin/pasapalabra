@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pasapalabra · Profesor</title>
+<style>
+:root{--verde:#22b14c;--verde2:#0d7a33;--rojo:#e5484d;--azul-osc:#0a4fa6}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:"Segoe UI",system-ui,Arial,sans-serif;color:#fff;min-height:100vh;text-align:center;padding:14px 16px 30px;
+  background:radial-gradient(circle at 50% 35%,#2aa0ff 0%,#0b6fe0 55%,#0a58bd 100%)}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(circle at 15% 85%,rgba(255,255,255,.14),transparent 35%),radial-gradient(circle at 85% 15%,rgba(255,255,255,.1),transparent 35%)}
+.logo,section{position:relative;z-index:1}
+.logo{font-size:clamp(13px,1.6vw,16px);letter-spacing:.35em;font-weight:700}
+.logo b{display:block;font-size:clamp(34px,5vw,58px);letter-spacing:0;font-weight:900;line-height:1.1}
+.muted{color:#c9d6ee}
+
+/* Rosco */
+.rosco{position:relative;container-type:inline-size;width:min(92vw,680px,70vh);aspect-ratio:1;margin:8px auto}
+.letras{position:absolute;inset:0}
+.ro{position:absolute;left:var(--x);top:var(--y);width:8.6cqw;height:8.6cqw;transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#5be586,var(--verde) 55%,var(--verde2));border:2px solid #fff;color:#fff;
+  font-weight:800;font-size:4.2cqw;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 8px rgba(0,0,0,.28);transition:transform .3s,background .3s}
+.ro.act{background:#fff;color:var(--azul-osc);transform:translate(-50%,-50%) scale(1.18);box-shadow:0 0 0 5px rgba(255,255,255,.4)}
+.centro{position:absolute;left:50%;top:50%;width:64%;transform:translate(-50%,-50%)}
+.pill{display:inline-block;border:2px solid #fff;background:var(--azul-osc);border-radius:999px;padding:.35em 1.2em;font-weight:800;font-size:3.6cqw;letter-spacing:.06em}
+.def{font-size:4.2cqw;font-weight:600;line-height:1.3;margin:3cqw 0}
+.url{font-size:3.4cqw;font-weight:800;word-break:break-all;margin:2cqw 0}
+.qr{box-shadow:0 12px 32px rgba(0,0,0,.35)}
+.entra{animation:subir .6s both}
+
+/* Botones y paneles */
+.btn{background:#fff;color:var(--azul-osc);border:0;border-radius:999px;padding:12px 26px;font-size:18px;font-weight:800;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.2);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(0,0,0,.2)}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.2)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn.sec{background:rgba(255,255,255,.2);color:#fff;box-shadow:none}
+.btn.sel{background:#ffd23f;color:var(--azul-osc)}
+.panel{background:rgba(10,79,166,.55);border-radius:16px;padding:16px;max-width:720px;margin:14px auto}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px auto;max-width:720px}
+.chip{background:rgba(255,255,255,.2);border-radius:999px;padding:6px 14px;font-weight:600}
+
+/* Partida: rosco a la izquierda, clasificación a la derecha */
+.juego-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;align-items:center;max-width:1200px;margin:0 auto}
+#vJuego .rosco{width:min(62vh,600px,100%)}
+.barra{display:flex;justify-content:center;gap:24px;align-items:center;margin:12px auto}
+.circ{width:80px;height:80px;border-radius:50%;border:3px solid #fff;background:var(--azul-osc);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;font-variant-numeric:tabular-nums}
+.clasif{background:rgba(10,79,166,.55);border-radius:16px;padding:14px 16px;text-align:left}
+.clasif h3{margin:0 0 6px;color:#ffd23f;text-align:center;font-size:22px}
+.clasif ol{list-style:none;margin:0;padding:0}
+.clasif li{display:flex;gap:10px;align-items:center;padding:7px 6px;border-bottom:1px solid rgba(255,255,255,.18);border-radius:8px}
+.pos{width:30px;height:30px;border-radius:50%;background:#fff;color:var(--azul-osc);font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.clasif li:nth-child(1) .pos{background:#ffd23f}
+.clasif li:nth-child(2) .pos{background:#dfe6f2}
+.clasif li:nth-child(3) .pos{background:#f0a06a}
+.info{flex:1;min-width:0}
+.info .nom{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:15px;gap:8px}
+.info .nom span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.marca{font-size:14px;font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
+.marca .ok{color:#9dffb0}
+.marca .ko{color:#ffb3b5}
+.bar{height:8px;background:rgba(255,255,255,.25);border-radius:8px;overflow:hidden;margin-top:4px}
+.bar>i{display:block;height:100%;background:var(--verde);transition:width .4s}
+.clasif li.sube{animation:flashOk 1.4s}
+.clasif li.baja{animation:flashMal 1.4s}
+
+/* Resultados con revelado por pasos (3º, 2º, 1º, 4º, 5º, tabla) */
+.podio{display:flex;align-items:flex-end;justify-content:center;gap:12px;min-height:260px;margin:10px auto}
+.puesto{width:30%;max-width:220px;border-radius:14px 14px 0 0;padding:12px 8px;display:flex;flex-direction:column;justify-content:flex-end;color:var(--azul-osc);animation:subir .7s both}
+.p1{background:#ffd23f;height:240px;animation-delay:.3s}
+.p2{background:#dfe6f2;height:190px}
+.p3{background:#f0a06a;height:150px}
+.p1 .medal{animation:latido 1.2s .9s infinite}
+.puesto .n{font-size:20px;font-weight:900;word-break:break-word}
+.puesto .p{font-size:14px;font-weight:700}
+.medal{font-size:38px}
+.quintos{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:10px auto;max-width:720px}
+.quinto{background:rgba(255,255,255,.18);border-radius:12px;padding:10px 18px;font-weight:700;font-size:18px;animation:subir .5s both}
+.quinto b{color:#ffd23f;font-size:22px;margin-right:6px}
+table{width:100%;max-width:820px;margin:0 auto;border-collapse:collapse;font-size:18px;background:rgba(10,79,166,.45);border-radius:12px;overflow:hidden}
+th,td{padding:9px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,.2)}
+th{background:rgba(10,79,166,.85);color:#ffd23f}
+.acciones{display:flex;gap:12px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}
+#confetti i{position:absolute;top:-20px;width:10px;height:14px;border-radius:2px;animation:caer linear forwards}
+
+/* Animaciones */
+@keyframes subir{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes latido{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes caer{to{transform:translateY(110vh) rotate(720deg)}}
+@keyframes flashOk{0%{background:rgba(76,217,100,.7)}100%{background:transparent}}
+@keyframes flashMal{0%{background:rgba(229,72,77,.7)}100%{background:transparent}}
+.hidden{display:none!important}
+
+@media (max-width:820px){
+  .juego-grid{grid-template-columns:1fr}
+  #vJuego .rosco{width:min(92vw,560px)}
+}
+</style>
+</head>
+<body>
+<div class="logo">EL ROSCO DE<b>pasapalabra</b></div>
+
+<!-- SALA DE ESPERA -->
+<section id="vEspera">
+  <div class="rosco">
+    <div class="letras" id="letrasEspera"></div>
+    <div class="centro">
+      <div class="pill">ÚNETE</div>
+      <div style="font-size:2.6cqw;font-weight:800;letter-spacing:.12em;margin-top:1cqw">ESCANEA PARA UNIRTE</div>
+      <img id="qr" class="qr" alt="Código QR para unirse" style="width:40cqw;max-width:260px;background:#fff;padding:8px;border-radius:14px;display:block;margin:2cqw auto">
+      <div class="url" id="urlJugar">…</div>
+      <div style="font-size:14px">Jugadores: <b id="nJug">0</b></div>
+    </div>
+  </div>
+  <div class="chips" id="listaEspera"></div>
+  <div class="panel">
+    <p style="font-weight:800;margin:0 0 8px">Elige el rosco</p>
+    <div class="chips" id="selRosco"></div>
+    <p class="muted" style="margin:6px 0 12px" id="infoRosco"></p>
+    <p><button class="btn" id="btnEmpezar">▶ Empezar partida</button></p>
+    <p style="font-size:14px;opacity:.85" id="otrasIps"></p>
+  </div>
+</section>
+
+<!-- PARTIDA -->
+<section id="vJuego" class="hidden">
+  <div class="juego-grid">
+    <div>
+      <div class="rosco">
+        <div class="letras deco" id="letrasJuego"></div>
+        <div class="centro">
+          <div class="pill" id="pillEmpieza"></div>
+          <div class="def" id="defHost"></div>
+        </div>
+      </div>
+      <div class="barra">
+        <div class="circ" id="timer" title="Tiempo transcurrido">0:00</div>
+        <div class="circ" id="contJug" title="Han terminado el rosco">0</div>
+      </div>
+      <p><button class="btn sec" id="btnTerminar">Terminar ya</button></p>
+    </div>
+    <aside class="clasif">
+      <h3>🏆 Clasificación</h3>
+      <ol id="listaClasif"></ol>
+      <p class="muted" id="masClasif" style="text-align:center;margin:8px 0 0"></p>
+    </aside>
+  </div>
+</section>
+
+<!-- RESULTADOS -->
+<section id="vResultados" class="hidden">
+  <h2 style="color:#ffd23f;font-weight:900;margin:6px 0">🏆 Resultados</h2>
+  <div class="podio" id="podio"></div>
+  <div class="quintos" id="quintos"></div>
+  <div id="tablaWrap" class="hidden">
+    <table>
+      <thead><tr><th>#</th><th>Jugador</th><th>Aciertos</th><th>Fallos</th><th>Tiempo</th><th>Sin responder</th></tr></thead>
+      <tbody id="tabla"></tbody>
+    </table>
+  </div>
+  <div class="acciones">
+    <button class="btn" id="btnSiguiente">Siguiente ▶</button>
+    <button class="btn sec" id="btnNueva">Nueva partida</button>
+  </div>
+  <p class="muted" id="pistaSig" style="font-size:14px">Pulsa Siguiente o la barra espaciadora para avanzar.</p>
+</section>
+
+<div id="confetti"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+let estado = null, base = 0, t0 = 0, preguntas = [], roscoPintado = null, activa = 0;
+let claveRes = '', claveClasif = '', claveRoscos = '', pasoRev = 0, prevMarca = {};
+const PASO_TABLA = 6;
+
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function mmss(ms){ const s = Math.floor(ms/1000); return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0'); }
+function fmt(ms){ if (ms == null) return '—'; const s = ms/1000; return Math.floor(s/60) + ':' + (s%60).toFixed(1).padStart(4,'0'); }
+function show(id, on){ $(id).classList.toggle('hidden', !on); }
+
+// Rosco decorativo (A arriba, sentido horario)
+function construirRoscos(){
+  const n = preguntas.length;
+  document.querySelectorAll('.letras').forEach(cont => {
+    cont.innerHTML = '';
+    preguntas.forEach((q, i) => {
+      const a = -Math.PI/2 + i * 2 * Math.PI / n;
+      const d = document.createElement('div');
+      d.className = 'ro';
+      d.textContent = q.letra;
+      d.style.setProperty('--x', (50 + 44*Math.cos(a)) + '%');
+      d.style.setProperty('--y', (50 + 44*Math.sin(a)) + '%');
+      cont.appendChild(d);
+    });
+  });
+  activa = 0;
+  pintarDeco();
+}
+
+async function cargarPreguntas(){
+  const p = await (await fetch('/api/preguntas')).json();
+  preguntas = p;
+  construirRoscos();
+}
+
+// Animación: cada 5 s la letra resaltada avanza (solo visual)
+function pintarDeco(){
+  if (!preguntas.length) return;
+  document.querySelectorAll('.letras').forEach(cont =>
+    [...cont.children].forEach((el, k) => el.classList.toggle('act', k === activa)));
+  const q = preguntas[activa];
+  $('pillEmpieza').textContent = (q.contiene ? 'CONTIENE LA ' : 'EMPIEZA POR ') + q.letra;
+  $('defHost').textContent = q.pregunta;
+  const d = $('defHost');
+  d.classList.remove('entra'); void d.offsetWidth; d.classList.add('entra');
+}
+setInterval(() => {
+  if (!preguntas.length) return;
+  activa = (activa + 1) % preguntas.length;
+  pintarDeco();
+}, 5000);
+
+async function cargar(){
+  try {
+    const r = await fetch('/api/estado');
+    estado = await r.json();
+    base = estado.transcurridoMs; t0 = Date.now();
+    if (roscoPintado !== estado.roscoIdx) {
+      roscoPintado = estado.roscoIdx;
+      await cargarPreguntas();
+    }
+    pintar();
+  } catch (e) {}
+}
+
+function pintar(){
+  const f = estado.fase;
+  show('vEspera', f === 'espera');
+  show('vJuego', f === 'juego');
+  show('vResultados', f === 'resultados');
+  if (f === 'espera') pintarEspera();
+  if (f === 'juego') pintarJuego();
+  if (f === 'resultados') pintarResultados();
+}
+
+function pintarEspera(){
+  $('nJug').textContent = estado.jugadores.length;
+  $('listaEspera').innerHTML = estado.jugadores.map(x => `<span class="chip">${esc(x.nombre)}</span>`).join('');
+  $('infoRosco').textContent = 'Rosco seleccionado: ' + estado.nombreRosco;
+}
+
+// Selector de rosco: se rehace solo si cambia la lista
+async function cargarRoscos(){
+  if (!estado || estado.fase !== 'espera') return;
+  const lista = await (await fetch('/api/roscos')).json();
+  const clave = JSON.stringify(lista) + estado.roscoIdx;
+  if (clave === claveRoscos) return;
+  claveRoscos = clave;
+  $('selRosco').innerHTML = lista.map(r => {
+    const sel = r.indice === estado.roscoIdx ? ' sel' : '';
+    const txt = r.disponible ? esc(r.nombre) : `Rosco ${r.indice} (pendiente)`;
+    return `<button class="btn sec${sel}" data-i="${r.indice}" ${r.disponible ? '' : 'disabled'}>${txt}</button>`;
+  }).join('');
+  $('selRosco').querySelectorAll('button[data-i]').forEach(b => {
+    b.onclick = () => post('/api/rosco', { indice: Number(b.dataset.i) });
+  });
+}
+setInterval(cargarRoscos, 3000);
+
+// Clasificación en directo: top 10 con aciertos y fallos. Solo se rehace si cambian los datos.
+function pintarJuego(){
+  const term = estado.jugadores.filter(x => x.respondidas === estado.total).length;
+  $('contJug').textContent = term + '/' + estado.jugadores.length;
+  const top = estado.jugadores.slice(0, 10);
+  const clave = JSON.stringify(top.map(x => [x.nombre, x.aciertos, x.fallos, x.respondidas]));
+  if (clave !== claveClasif) {
+    claveClasif = clave;
+    $('listaClasif').innerHTML = top.map((x, i) => {
+      const prev = prevMarca[x.nombre] || { a: 0, f: 0 };
+      const cls = x.aciertos > prev.a ? 'sube' : x.fallos > prev.f ? 'baja' : '';
+      const pct = Math.round(x.respondidas / estado.total * 100);
+      return `<li class="${cls}"><span class="pos">${i+1}</span><div class="info"><div class="nom"><span>${esc(x.nombre)}</span><span class="marca"><span class="ok">✔ ${x.aciertos}</span> &nbsp;<span class="ko">✘ ${x.fallos}</span></span></div><div class="bar"><i style="width:${pct}%"></i></div></div></li>`;
+    }).join('') || '<li class="muted">Esperando respuestas…</li>';
+    prevMarca = {};
+    estado.jugadores.forEach(x => { prevMarca[x.nombre] = { a: x.aciertos, f: x.fallos }; });
+  }
+  const resto = estado.jugadores.length - 10;
+  $('masClasif').textContent = resto > 0 ? `… y ${resto} más` : '';
+}
+
+// Resultados: solo se reconstruye cuando cambian los datos
+function pintarResultados(){
+  const clave = JSON.stringify(estado.jugadores);
+  if (clave === claveRes) return;
+  claveRes = clave;
+  construirResultados();
+}
+
+function construirResultados(){
+  const j = estado.jugadores;
+  const medallas = ['🥇','🥈','🥉'];
+  const cols = [[2,'p2'],[1,'p1'],[3,'p3']];
+  $('podio').innerHTML = cols.filter(([pos]) => j[pos-1]).map(([pos, clase]) => {
+    const x = j[pos-1];
+    const paso = pos === 3 ? 1 : pos === 2 ? 2 : 3;
+    return `<div class="puesto ${clase}" data-paso="${paso}"><div class="medal">${medallas[pos-1]}</div><div class="n">${esc(x.nombre)}</div><div class="p">✔ ${x.aciertos} · ✘ ${x.fallos}</div></div>`;
+  }).join('');
+  $('quintos').innerHTML = [4, 5].filter(p => j[p-1]).map(p => {
+    const x = j[p-1];
+    return `<div class="quinto" data-paso="${p}"><b>${p}º</b>${esc(x.nombre)} · ✔ ${x.aciertos} · ✘ ${x.fallos}</div>`;
+  }).join('');
+  $('tabla').innerHTML = j.slice(0, 10).map((x, i) =>
+    `<tr><td>${i+1}</td><td>${esc(x.nombre)}</td><td>${x.aciertos}</td><td>${x.fallos}</td><td>${fmt(x.fin)}</td><td>${estado.total - x.respondidas}</td></tr>`).join('')
+    + (j.length > 10 ? `<tr><td colspan="6" style="text-align:center;opacity:.8">… y ${j.length - 10} más</td></tr>` : '');
+  pasoRev = 0;
+  aplicarPaso();
+}
+
+function aplicarPaso(){
+  document.querySelectorAll('#vResultados [data-paso]').forEach(el =>
+    el.classList.toggle('hidden', Number(el.dataset.paso) > pasoRev));
+  const tabla = pasoRev >= PASO_TABLA;
+  $('podio').classList.toggle('hidden', tabla);
+  $('quintos').classList.toggle('hidden', tabla);
+  $('tablaWrap').classList.toggle('hidden', !tabla);
+  $('btnSiguiente').classList.toggle('hidden', tabla);
+  $('pistaSig').classList.toggle('hidden', tabla);
+}
+
+function siguientePaso(){
+  if (pasoRev >= PASO_TABLA) return;
+  pasoRev++;
+  aplicarPaso();
+  if (pasoRev === 3) lanzarConfeti();
+}
+
+function lanzarConfeti(){
+  const c = $('confetti');
+  c.innerHTML = '';
+  const colores = ['#ffd23f','#22b14c','#e5484d','#ffffff','#ff9ad5','#7fd1ff'];
+  for (let i = 0; i < 90; i++) {
+    const s = document.createElement('i');
+    s.style.left = Math.random() * 100 + '%';
+    s.style.background = colores[i % colores.length];
+    s.style.animationDelay = (Math.random() * 0.6) + 's';
+    s.style.animationDuration = (2.2 + Math.random() * 1.5) + 's';
+    c.appendChild(s);
+  }
+  setTimeout(() => { c.innerHTML = ''; }, 4500);
+}
+
+// Cronómetro que cuenta hacia arriba (sin límite)
+function tic(){
+  if (!estado) return;
+  const ms = estado.fase === 'juego' ? base + (Date.now() - t0) : base;
+  $('timer').textContent = mmss(ms);
+}
+
+async function post(url, body){
+  const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body || {}) });
+  const d = await r.json();
+  if (!r.ok) alert(d.error || 'Error');
+  claveRoscos = '';
+  await cargar();
+  await cargarRoscos();
+}
+
+$('btnEmpezar').onclick = () => post('/api/iniciar');
+$('btnTerminar').onclick = () => { if (confirm('¿Terminar la partida ya?')) post('/api/terminar'); };
+$('btnNueva').onclick = () => post('/api/nueva');
+$('btnSiguiente').onclick = siguientePaso;
+document.addEventListener('keydown', e => {
+  if (estado && estado.fase === 'resultados' && (e.key === ' ' || e.key === 'Enter') && e.target.tagName !== 'BUTTON') {
+    e.preventDefault();
+    siguientePaso();
+  }
+});
+
+fetch('/api/info').then(r => r.json()).then(d => {
+  const ips = d.ips.length ? d.ips : ['localhost'];
+  const url = `http://${ips[0]}:${d.puerto}`;
+  $('urlJugar').textContent = url.replace('http://', '');
+  $('otrasIps').textContent = ips.length > 1 ? 'Otras direcciones: ' + ips.slice(1).map(ip => `http://${ip}:${d.puerto}`).join(' · ') : '';
+  if (typeof qrcode === 'function') {
+    const qr = qrcode(0, 'M');
+    qr.addData(url);
+    qr.make();
+    $('qr').src = qr.createDataURL(6, 0);
+  } else {
+    $('qr').style.display = 'none';
+  }
+});
+
+setInterval(cargar, 800);
+setInterval(tic, 250);
+cargar();
+</script>
+</body>
+</html>

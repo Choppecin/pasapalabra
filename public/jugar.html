@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pasapalabra</title>
+<style>
+:root{--verde:#22b14c;--verde2:#0d7a33;--rojo:#e5484d;--azul-osc:#0a4fa6}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:"Segoe UI",system-ui,Arial,sans-serif;color:#fff;min-height:100vh;text-align:center;padding:14px 12px 40px;overflow-x:hidden;
+  background:radial-gradient(circle at 50% 35%,#2aa0ff 0%,#0b6fe0 55%,#0a58bd 100%)}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(circle at 15% 85%,rgba(255,255,255,.14),transparent 35%),radial-gradient(circle at 85% 15%,rgba(255,255,255,.1),transparent 35%)}
+.logo,section{position:relative;z-index:1}
+.logo{font-size:13px;letter-spacing:.35em;font-weight:700}
+.logo b{display:block;font-size:36px;letter-spacing:0;font-weight:900;line-height:1.1}
+.muted{color:#c9d6ee}
+
+/* Rosco */
+.rosco{position:relative;container-type:inline-size;width:min(92vw,460px,68vh);aspect-ratio:1;margin:8px auto}
+.letras{position:absolute;inset:0}
+.ro{position:absolute;left:var(--x);top:var(--y);width:9cqw;height:9cqw;transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#5be586,var(--verde) 55%,var(--verde2));border:2px solid #fff;color:#fff;
+  font-weight:800;font-size:4.4cqw;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.28);transition:transform .3s,background .3s,opacity .3s}
+.ro.ok{opacity:.55}
+.ro.fail{background:radial-gradient(circle at 35% 30%,#ff9a9e,var(--rojo) 55%,#a51e24);opacity:.75}
+.ro.act{background:#fff;color:var(--azul-osc);transform:translate(-50%,-50%) scale(1.18);animation:brillo 1.4s infinite;opacity:1}
+#letrasEspera .ro{animation:respira 2.4s ease-in-out infinite;animation-delay:calc(var(--i)*.08s)}
+.centro{position:absolute;left:50%;top:50%;width:66%;transform:translate(-50%,-50%)}
+.pill{display:inline-block;border:2px solid #fff;background:var(--azul-osc);border-radius:999px;padding:.3em 1em;font-weight:800;font-size:3.8cqw;letter-spacing:.06em}
+.pregunta{font-size:4.3cqw;font-weight:600;line-height:1.3;margin:2.5cqw 0}
+.input{width:100%;background:transparent;border:0;border-bottom:2px solid rgba(255,255,255,.85);color:#fff;font-size:4.4cqw;text-align:center;padding:.3em 0;outline:none;font-family:inherit}
+.input::placeholder{color:rgba(255,255,255,.6);font-size:3.4cqw;text-transform:uppercase}
+.btn{background:#0b4fa8;border:2px solid #fff;color:#fff;border-radius:999px;padding:.45em 1.5em;font-weight:800;font-size:4cqw;cursor:pointer;margin-top:3cqw;font-family:inherit;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(2px)}
+.btn:disabled{opacity:.5}
+.btn.blanco{background:#fff;color:var(--azul-osc);font-size:18px;padding:12px 26px;border:0;margin-top:0}
+.link{background:none;border:0;color:#fff;letter-spacing:.25em;opacity:.85;font-size:3cqw;margin-top:2.5cqw;cursor:pointer;font-family:inherit;text-decoration:underline}
+
+/* Feedback grande */
+.fb{min-height:44px;font-size:22px;font-weight:900;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:8px;animation:subir .4s both}
+.fb .sym{font-size:34px;line-height:1}
+.fb.ok{color:#b9ffc6}
+.fb.mal{color:#ffc2c4}
+
+/* Barra de estadísticas */
+.barra{display:flex;justify-content:space-between;width:min(94vw,460px);margin:6px auto}
+.stat{display:flex;flex-direction:column;align-items:center;gap:5px}
+.stat span{font-size:10px;font-weight:800;letter-spacing:.08em}
+.circ{width:58px;height:58px;border-radius:50%;border:3px solid #fff;background:var(--azul-osc);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;font-variant-numeric:tabular-nums}
+.circ.verde{background:var(--verde)}
+.circ.rojo{background:var(--rojo)}
+
+.card{background:rgba(10,79,166,.55);border-radius:16px;padding:18px;max-width:460px;margin:14px auto}
+.hidden{display:none!important}
+.podio{display:flex;align-items:flex-end;justify-content:center;gap:8px;margin:14px 0 8px;min-height:200px}
+.puesto{width:30%;border-radius:12px 12px 0 0;padding:10px 6px;display:flex;flex-direction:column;justify-content:flex-end;color:var(--azul-osc);animation:subir .7s both}
+.p1{background:#ffd23f;height:190px;animation-delay:.3s}
+.p2{background:#dfe6f2;height:150px}
+.p3{background:#f0a06a;height:120px}
+.puesto .n{font-size:16px;font-weight:900;word-break:break-word}
+.puesto .p{font-size:12px;font-weight:700}
+.medal{font-size:28px}
+table{width:100%;border-collapse:collapse;font-size:14px;background:rgba(10,79,166,.45);border-radius:12px;overflow:hidden}
+th,td{padding:8px 4px;text-align:left;border-bottom:1px solid rgba(255,255,255,.2)}
+th{background:rgba(10,79,166,.85);color:#ffd23f}
+tr.yo td{background:rgba(255,210,63,.35);font-weight:800}
+input.campo{width:100%;font-size:20px;padding:14px;border-radius:999px;border:0;text-align:center;font-family:inherit;color:var(--azul-osc)}
+.sacude{animation:sacudir .45s}
+
+@keyframes subir{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes sacudir{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+@keyframes respira{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.12)}}
+@keyframes latido{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes brillo{0%,100%{box-shadow:0 0 0 4px rgba(255,255,255,.35)}50%{box-shadow:0 0 0 10px rgba(255,255,255,0)}}
+</style>
+</head>
+<body>
+<div class="logo">EL ROSCO DE<b>pasapalabra</b></div>
+
+<!-- ENTRAR -->
+<section id="vEntrar" class="card hidden">
+  <p style="font-weight:700">Escribe tu nombre para entrar</p>
+  <input class="campo" type="text" id="nombre" maxlength="20" placeholder="Tu nombre" autocomplete="off">
+  <p><button class="btn blanco" id="btnEntrar" style="margin-top:12px">ENTRAR</button></p>
+  <p id="errEntrar" style="font-weight:700;color:#ffc2c4"></p>
+</section>
+
+<!-- ESPERA -->
+<section id="vEspera" class="hidden">
+  <div class="rosco">
+    <div class="letras" id="letrasEspera"></div>
+    <div class="centro">
+      <div class="pill">ESPERA</div>
+      <div class="pregunta">Hola <b id="nombreEspera"></b>.<br>El profesor empezará pronto.</div>
+      <div style="font-size:14px">Rosco: <b id="roscoEspera"></b></div>
+      <div style="font-size:14px">Conectados: <b id="nConect">0</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- JUEGO -->
+<section id="vJuego" class="hidden">
+  <div class="rosco">
+    <div class="letras" id="letrasJuego"></div>
+    <div class="centro">
+      <div id="parteP">
+        <div class="pill" id="pillJ"></div>
+        <div class="pregunta" id="texto"></div>
+        <input class="input" id="resp" type="text" autocomplete="off" autocapitalize="off" placeholder="Escribe aquí tu respuesta">
+        <div><button class="btn" id="btnResponder">✔ RESPONDER</button></div>
+        <div><button class="link" id="btnPasapalabra">PASAPALABRA</button></div>
+      </div>
+      <div id="fin" class="hidden">
+        <div class="pregunta">🏁 ¡Rosco terminado en <b id="tiempoFin"></b>!</div>
+        <div style="font-size:14px;opacity:.9">Esperando a que acaben los demás…</div>
+      </div>
+    </div>
+  </div>
+  <div class="fb" id="fb"></div>
+  <div class="barra">
+    <div class="stat"><div class="circ" id="timer">0:00</div><span>TIEMPO</span></div>
+    <div class="stat"><div class="circ verde" id="cAcierto">0</div><span>ACIERTOS</span></div>
+    <div class="stat"><div class="circ rojo" id="cFall">0</div><span>FALLOS</span></div>
+    <div class="stat"><div class="circ" id="cRest">0</div><span>PENDIENTES</span></div>
+  </div>
+</section>
+
+<!-- RESULTADOS -->
+<section id="vResultados" class="hidden">
+  <h2 style="color:#ffd23f;font-weight:900;margin:6px 0">🏆 Resultados</h2>
+  <div class="podio" id="podio"></div>
+  <div class="card" style="padding:10px">
+    <table>
+      <thead><tr><th>#</th><th>Jugador</th><th>Aciertos</th><th>Fallos</th><th>Tiempo</th></tr></thead>
+      <tbody id="tabla"></tbody>
+    </table>
+  </div>
+  <p id="miPuesto" style="font-weight:800"></p>
+</section>
+
+<script>
+const $ = id => document.getElementById(id);
+const CLAVE = 'pasapalabra_pid';
+let pid = null;
+try { pid = localStorage.getItem(CLAVE); } catch (e) {}
+let estado = null, base = 0, t0 = 0, claveUlt = '', enviando = false, fbTimer = null, claveRes = '';
+
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function mmss(ms){ const s = Math.floor(ms/1000); return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0'); }
+function fmt(ms){ if (ms == null) return '—'; const s = ms/1000; return Math.floor(s/60) + ':' + (s%60).toFixed(1).padStart(4,'0'); }
+
+function ver(id){
+  ['vEntrar','vEspera','vJuego','vResultados'].forEach(s => $(s).classList.toggle('hidden', s !== id));
+}
+
+// Construye las letras del rosco solo si cambian (dataset.clave guarda el rosco pintado)
+function construirRosco(id, letras){
+  const cont = $(id);
+  const clave = letras.join('');
+  if (cont.dataset.clave === clave) return;
+  cont.dataset.clave = clave;
+  cont.innerHTML = '';
+  const n = letras.length;
+  letras.forEach((l, i) => {
+    const a = -Math.PI/2 + i * 2 * Math.PI / n;
+    const d = document.createElement('div');
+    d.className = 'ro';
+    d.textContent = l;
+    d.style.setProperty('--x', (50 + 44*Math.cos(a)) + '%');
+    d.style.setProperty('--y', (50 + 44*Math.sin(a)) + '%');
+    d.style.setProperty('--i', i);
+    cont.appendChild(d);
+  });
+}
+
+function pintarEstados(yo){
+  const act = yo.pregunta ? yo.letras.indexOf(yo.pregunta.letra) : -1;
+  [...$('letrasJuego').children].forEach((el, i) => {
+    el.className = 'ro' + (yo.estado[i] === 'ok' ? ' ok' : yo.estado[i] === 'fail' ? ' fail' : '') + (i === act ? ' act' : '');
+  });
+}
+
+async function cargar(){
+  try {
+    const r = await fetch('/api/estado?pid=' + encodeURIComponent(pid || ''));
+    estado = await r.json();
+    base = estado.transcurridoMs; t0 = Date.now();
+    pintar();
+  } catch (e) {}
+}
+
+function pintar(){
+  const f = estado.fase, yo = estado.yo;
+  if (!yo) {
+    ver('vEntrar');
+    $('btnEntrar').disabled = f !== 'espera';
+    $('errEntrar').textContent = f === 'espera' ? '' : 'La partida ya ha empezado. Espera a la siguiente.';
+    return;
+  }
+  if (f === 'espera') {
+    ver('vEspera');
+    $('nombreEspera').textContent = yo.nombre;
+    $('nConect').textContent = estado.jugadores.length;
+    $('roscoEspera').textContent = estado.nombreRosco;
+    construirRosco('letrasEspera', yo.letras);
+  } else if (f === 'juego') {
+    ver('vJuego');
+    pintarJuego(yo);
+  } else {
+    ver('vResultados');
+    pintarResultados(yo);
+  }
+}
+
+function pintarJuego(yo){
+  construirRosco('letrasJuego', yo.letras);
+  pintarEstados(yo);
+  $('cAcierto').textContent = yo.aciertos;
+  $('cFall').textContent = yo.fallos;
+  $('cRest').textContent = yo.pendientes;
+  const p = yo.pregunta;
+  $('parteP').classList.toggle('hidden', !p);
+  $('fin').classList.toggle('hidden', !!p);
+  if (!p) { $('tiempoFin').textContent = fmt(yo.fin); return; }
+  $('pillJ').textContent = (p.contiene ? 'CONTIENE LA ' : 'EMPIEZA POR ') + p.letra;
+  $('texto').textContent = p.texto;
+  const clave = p.letra + '|' + yo.respondidas + '|' + yo.pendientes;
+  if (clave !== claveUlt) {
+    claveUlt = clave;
+    $('resp').value = '';
+    $('resp').focus();
+  }
+}
+
+function pintarResultados(yo){
+  const clave = JSON.stringify(estado.jugadores) + yo.nombre;
+  if (clave === claveRes) return;
+  claveRes = clave;
+  const top = estado.jugadores.slice(0, 3);
+  const medallas = ['🥇','🥈','🥉'];
+  $('podio').innerHTML = [1, 0, 2].map(i => top[i]
+    ? `<div class="puesto p${i+1}"><div class="medal">${medallas[i]}</div><div class="n">${esc(top[i].nombre)}</div><div class="p">✔ ${top[i].aciertos} · ✘ ${top[i].fallos}</div></div>`
+    : '').join('');
+  $('tabla').innerHTML = estado.jugadores.map((x, i) =>
+    `<tr class="${x.nombre === yo.nombre ? 'yo' : ''}"><td>${i+1}</td><td>${esc(x.nombre)}</td><td>${x.aciertos}</td><td>${x.fallos}</td><td>${fmt(x.fin)}</td></tr>`).join('');
+  const pos = estado.jugadores.findIndex(x => x.nombre === yo.nombre) + 1;
+  $('miPuesto').textContent = `Tu puesto: ${pos} de ${estado.jugadores.length} · ✔ ${yo.aciertos} aciertos · ✘ ${yo.fallos} fallos`;
+}
+
+function mostrarFb(simbolo, texto, clase){
+  const el = $('fb');
+  el.className = 'fb ' + (clase || '');
+  el.innerHTML = `<span class="sym">${simbolo}</span><span>${esc(texto)}</span>`;
+  el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '';
+  clearTimeout(fbTimer);
+  fbTimer = setTimeout(() => { el.innerHTML = ''; }, 2500);
+}
+
+async function enviarRespuesta(){
+  if (enviando) return;
+  const texto = $('resp').value.trim();
+  if (!texto) { $('resp').focus(); return; }
+  enviando = true;
+  try {
+    const r = await fetch('/api/responder', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pid, texto }) });
+    const d = await r.json();
+    if (!r.ok) mostrarFb('!', d.error, 'mal');
+    else if (d.ok) mostrarFb('✔', '¡Correcto!', 'ok');
+    else {
+      mostrarFb('✘', 'Era: ' + d.respuesta, 'mal');
+      const pp = $('parteP'); pp.classList.remove('sacude'); void pp.offsetWidth; pp.classList.add('sacude');
+    }
+  } catch (e) { mostrarFb('!', 'Sin conexión', 'mal'); }
+  enviando = false;
+  await cargar();
+}
+
+async function pasapalabra(){
+  if (enviando) return;
+  enviando = true;
+  try {
+    await fetch('/api/pasapalabra', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pid }) });
+  } catch (e) {}
+  enviando = false;
+  await cargar();
+}
+
+$('btnEntrar').onclick = async () => {
+  const nombre = $('nombre').value.trim();
+  if (!nombre) { $('errEntrar').textContent = 'Escribe tu nombre'; return; }
+  const r = await fetch('/api/unirse', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ nombre }) });
+  const d = await r.json();
+  if (!r.ok) { $('errEntrar').textContent = d.error; return; }
+  pid = d.pid;
+  try { localStorage.setItem(CLAVE, pid); } catch (e) {}
+  await cargar();
+};
+$('btnResponder').onclick = enviarRespuesta;
+$('resp').addEventListener('keydown', e => { if (e.key === 'Enter') enviarRespuesta(); });
+$('btnPasapalabra').onclick = pasapalabra;
+
+// Cronómetro que cuenta hacia arriba (sin límite)
+function tic(){
+  if (!estado) return;
+  const ms = estado.fase === 'juego' ? base + (Date.now() - t0) : base;
+  $('timer').textContent = mmss(ms);
+}
+
+setInterval(cargar, 800);
+setInterval(tic, 250);
+cargar();
+</script>
+</body>
+</html>

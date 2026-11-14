@@ -1,0 +1,183 @@
+{
+  "nombre": "Rosco 1",
+  "preguntas": [
+    {
+      "letra": "A",
+      "pregunta": "Cantidad de luz que absorbe una disolución; es directamente proporcional a su concentración.",
+      "respuestas": [
+        "Absorbancia"
+      ]
+    },
+    {
+      "letra": "B",
+      "pregunta": "Disolución sin analito frente a la que se mide, para poner el equipo a cero.",
+      "respuestas": [
+        "Blanco"
+      ]
+    },
+    {
+      "letra": "C",
+      "pregunta": "Técnica que separa los componentes de una mezcla con una fase móvil que arrastra el analito por una fase estacionaria.",
+      "respuestas": [
+        "Cromatografía",
+        "Cromatografia"
+      ]
+    },
+    {
+      "letra": "D",
+      "pregunta": "Elemento cuya lámpara se usa como fuente de radiación ultravioleta en un espectrofotómetro.",
+      "respuestas": [
+        "Deuterio"
+      ]
+    },
+    {
+      "letra": "E",
+      "pregunta": "Técnica en la que las moléculas cargadas migran por un campo eléctrico: las positivas hacia el cátodo y las negativas hacia el ánodo.",
+      "respuestas": [
+        "Electroforesis"
+      ]
+    },
+    {
+      "letra": "F",
+      "pregunta": "Emisión de luz instantánea cuando el electrón excitado vuelve al estado basal.",
+      "respuestas": [
+        "Fluorescencia"
+      ]
+    },
+    {
+      "letra": "G",
+      "pregunta": "Reserva energética de los animales, almacenada en el hígado y el músculo.",
+      "respuestas": [
+        "Glucógeno",
+        "Glucogeno"
+      ]
+    },
+    {
+      "letra": "H",
+      "pregunta": "Siglas en inglés de la técnica de separación líquida de alta resolución, usada para fármacos y glucohemoglobina.",
+      "respuestas": [
+        "HPLC"
+      ]
+    },
+    {
+      "letra": "I",
+      "pregunta": "Espectroscopía cuyo espectro es la “huella dactilar” de cada molécula (más de 700 nm).",
+      "respuestas": [
+        "Infrarroja"
+      ]
+    },
+    {
+      "letra": "J",
+      "pregunta": "Instrumento con aguja acoplada, alternativa al sistema de tubos con vacío, para la punción venosa.",
+      "respuestas": [
+        "Jeringa"
+      ]
+    },
+    {
+      "letra": "L",
+      "pregunta": "Distancia entre los picos de una onda electromagnética; se mide en nanómetros.",
+      "respuestas": [
+        "Longitud de onda",
+        "Longitud"
+      ]
+    },
+    {
+      "letra": "M",
+      "pregunta": "Componente del espectrofotómetro que selecciona qué ondas pasan y absorbe el resto.",
+      "respuestas": [
+        "Monocromador"
+      ]
+    },
+    {
+      "letra": "N",
+      "pregunta": "Técnica que mide la luz dispersada por partículas en suspensión, con el detector a 90º del haz incidente.",
+      "respuestas": [
+        "Nefelometría",
+        "Nefelometria"
+      ]
+    },
+    {
+      "letra": "O",
+      "pregunta": "Técnica que mide la presión osmótica y suele usarse en el laboratorio de urgencias.",
+      "respuestas": [
+        "Osmometría",
+        "Osmometria"
+      ]
+    },
+    {
+      "letra": "P",
+      "pregunta": "Trombocitos: células sin núcleo de 2-4 micras que liberan factores para iniciar la coagulación.",
+      "respuestas": [
+        "Plaquetas"
+      ]
+    },
+    {
+      "letra": "Q",
+      "pregunta": "Emisión de luz en la que los electrones se excitan por una reacción química.",
+      "respuestas": [
+        "Quimioluminiscencia"
+      ]
+    },
+    {
+      "letra": "R",
+      "pregunta": "Aparato que mide el índice de refracción de un líquido; sirve para la densidad de la orina.",
+      "respuestas": [
+        "Refractómetro",
+        "Refractometro"
+      ]
+    },
+    {
+      "letra": "S",
+      "pregunta": "Fracción líquida de la sangre que queda tras retirar el coágulo; se obtiene sin anticoagulante.",
+      "respuestas": [
+        "Suero"
+      ]
+    },
+    {
+      "letra": "T",
+      "pregunta": "Proteína muy característica del infarto; sube a las 3-4 horas y tarda 10-12 días en bajar.",
+      "respuestas": [
+        "Troponina"
+      ]
+    },
+    {
+      "letra": "U",
+      "pregunta": "Principal compuesto nitrogenado excretado por la orina, sintetizado en el hígado en un ciclo que lleva su nombre.",
+      "respuestas": [
+        "Urea"
+      ]
+    },
+    {
+      "letra": "V",
+      "pregunta": "Sistema de tubos con vacío y tapones de colores para la extracción de sangre venosa.",
+      "respuestas": [
+        "Vacutainer"
+      ]
+    },
+    {
+      "letra": "X",
+      "pregunta": "Gas que transporta la hemoglobina; su concentración es la mayor diferencia entre sangre arterial y venosa.",
+      "respuestas": [
+        "Oxígeno",
+        "Oxigeno"
+      ],
+      "contiene": true
+    },
+    {
+      "letra": "Y",
+      "pregunta": "Tipo de norma científica a la que pertenece la de Lambert-Beer.",
+      "respuestas": [
+        "Ley"
+      ],
+      "contiene": true
+    },
+    {
+      "letra": "Z",
+      "pregunta": "Proteína que cataliza reacciones metabólicas con gran especificidad (modelo llave-cerradura).",
+      "respuestas": [
+        "Enzima"
+      ],
+      "contiene": true
+    }
+  ]
+}

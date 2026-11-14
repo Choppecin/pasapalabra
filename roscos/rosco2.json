@@ -1,0 +1,180 @@
+{
+  "nombre": "Rosco 2",
+  "preguntas": [
+    {
+      "letra": "A",
+      "pregunta": "Proteína más abundante del plasma (58 %), transportadora de lípidos y otras moléculas.",
+      "respuestas": [
+        "Albúmina",
+        "Albumina"
+      ]
+    },
+    {
+      "letra": "B",
+      "pregunta": "Pigmento amarillo que resulta de la descomposición del grupo hemo; si sube, la piel se vuelve amarillenta.",
+      "respuestas": [
+        "Bilirrubina"
+      ]
+    },
+    {
+      "letra": "C",
+      "pregunta": "Producto de desecho del metabolismo muscular; es el indicador más común de la función renal.",
+      "respuestas": [
+        "Creatinina"
+      ]
+    },
+    {
+      "letra": "D",
+      "pregunta": "Enfermedad más importante de las alteraciones del metabolismo de los glúcidos; puede ser tipo I, tipo II o gestacional.",
+      "respuestas": [
+        "Diabetes"
+      ]
+    },
+    {
+      "letra": "E",
+      "pregunta": "Glóbulos rojos: células sin núcleo que se forman en la médula ósea y viven unos 120 días.",
+      "respuestas": [
+        "Eritrocitos"
+      ]
+    },
+    {
+      "letra": "F",
+      "pregunta": "Proteína del plasma que interviene en la coagulación; el suero ya no la contiene.",
+      "respuestas": [
+        "Fibrinógeno",
+        "Fibrinogeno"
+      ]
+    },
+    {
+      "letra": "G",
+      "pregunta": "Único monosacárido que las células oxidan para obtener energía; su nivel normal ronda 70-110 mg/dl.",
+      "respuestas": [
+        "Glucosa"
+      ]
+    },
+    {
+      "letra": "H",
+      "pregunta": "Proteína con grupo hemo que transporta el oxígeno por la sangre.",
+      "respuestas": [
+        "Hemoglobina"
+      ]
+    },
+    {
+      "letra": "I",
+      "pregunta": "Hormona que ayuda a meter el azúcar en las células; si falta, el cuerpo usa grasas y se forman cuerpos cetónicos.",
+      "respuestas": [
+        "Insulina"
+      ]
+    },
+    {
+      "letra": "J",
+      "pregunta": "Las mujeres deben lavarse con agua ___ y enjuagar bien antes de recoger la primera micción del día para un análisis.",
+      "respuestas": [
+        "Jabonosa"
+      ],
+      "contiene": true
+    },
+    {
+      "letra": "L",
+      "pregunta": "Glóbulos blancos que defienden al organismo mediante fagocitosis y mecanismos inmunitarios.",
+      "respuestas": [
+        "Leucocitos"
+      ]
+    },
+    {
+      "letra": "M",
+      "pregunta": "Porción manipulada de un espécimen (centrifugada, tallada…), lista para analizar.",
+      "respuestas": [
+        "Muestra"
+      ]
+    },
+    {
+      "letra": "N",
+      "pregunta": "Unidad funcional del riñón que filtra la sangre y elimina productos de desecho.",
+      "respuestas": [
+        "Nefrona"
+      ]
+    },
+    {
+      "letra": "O",
+      "pregunta": "Líquido amarillento secretado por los riñones; su examen es no invasivo, rápido y económico.",
+      "respuestas": [
+        "Orina"
+      ]
+    },
+    {
+      "letra": "P",
+      "pregunta": "Material volumétrico para medir y transferir pequeños volúmenes de líquido; su calibración es una práctica de clase.",
+      "respuestas": [
+        "Pipeta"
+      ]
+    },
+    {
+      "letra": "Q",
+      "pregunta": "Pieza de un equipo de absorción atómica que convierte el material en gas.",
+      "respuestas": [
+        "Quemador"
+      ]
+    },
+    {
+      "letra": "R",
+      "pregunta": "Sustancia que se emplea para realizar reacciones y determinar componentes; los hay para análisis, especiales y purísimos.",
+      "respuestas": [
+        "Reactivo"
+      ]
+    },
+    {
+      "letra": "S",
+      "pregunta": "Residuo que queda al centrifugar un líquido; se resuspende y se examina al microscopio (por ejemplo, el urinario).",
+      "respuestas": [
+        "Sedimento"
+      ]
+    },
+    {
+      "letra": "T",
+      "pregunta": "Lípidos que almacenan energía en los adipocitos; los VLDL transportan los endógenos.",
+      "respuestas": [
+        "Triglicéridos",
+        "Trigliceridos"
+      ]
+    },
+    {
+      "letra": "U",
+      "pregunta": "Estudio microbiológico urinario que identifica el microorganismo causante de una infección; se usa el medio CLED.",
+      "respuestas": [
+        "Urocultivo"
+      ]
+    },
+    {
+      "letra": "V",
+      "pregunta": "___ de sedimentación globular (VSG): tiempo que tardan en sedimentar las células sanguíneas.",
+      "respuestas": [
+        "Velocidad"
+      ]
+    },
+    {
+      "letra": "X",
+      "pregunta": "Elementos extravasados en un proceso inflamatorio, con composición similar al plasma sanguíneo.",
+      "respuestas": [
+        "Exudado"
+      ],
+      "contiene": true
+    },
+    {
+      "letra": "Y",
+      "pregunta": "Estado de espera sin comer ni beber que se pide antes de ciertas analíticas de sangre.",
+      "respuestas": [
+        "Ayuno"
+      ],
+      "contiene": true
+    },
+    {
+      "letra": "Z",
+      "pregunta": "Aparato automático de la fase analítica que dispensa reactivos, incuba y procesa datos.",
+      "respuestas": [
+        "Analizador"
+      ],
+      "contiene": true
+    }
+  ]
+}

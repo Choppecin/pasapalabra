@@ -1,0 +1,183 @@
+{
+  "nombre": "Rosco 3",
+  "preguntas": [
+    {
+      "letra": "A",
+      "pregunta": "Parte de una muestra que se usa para una prueba concreta de laboratorio.",
+      "respuestas": [
+        "Alícuota",
+        "Alicuota"
+      ]
+    },
+    {
+      "letra": "B",
+      "pregunta": "Muestra de tejido que se fija con formol, se incluye en parafina, se corta y se tiñe en anatomía patológica.",
+      "respuestas": [
+        "Biopsia"
+      ]
+    },
+    {
+      "letra": "C",
+      "pregunta": "Lípido de las membranas y precursor de hormonas; su fracción LDL se calcula con la fórmula de Friedewald.",
+      "respuestas": [
+        "Colesterol"
+      ]
+    },
+    {
+      "letra": "D",
+      "pregunta": "Parámetro físico de la orina, con valores normales entre 1.005 y 1.030; se mide con un refractómetro.",
+      "respuestas": [
+        "Densidad"
+      ]
+    },
+    {
+      "letra": "E",
+      "pregunta": "Anticoagulante de los tubos de tapón violeta o lavanda, usados para el hemograma.",
+      "respuestas": [
+        "EDTA"
+      ]
+    },
+    {
+      "letra": "F",
+      "pregunta": "Enzima, llamada alcalina, que sube si hay obstrucción de las vías biliares.",
+      "respuestas": [
+        "Fosfatasa alcalina",
+        "Fosfatasa"
+      ]
+    },
+    {
+      "letra": "G",
+      "pregunta": "Enfermedad en la que se inflaman las articulaciones por acúmulo de ácido úrico.",
+      "respuestas": [
+        "Gota"
+      ]
+    },
+    {
+      "letra": "H",
+      "pregunta": "Parámetro del hemograma que indica el porcentaje en volumen de eritrocitos respecto al total de la sangre.",
+      "respuestas": [
+        "Hematocrito"
+      ]
+    },
+    {
+      "letra": "I",
+      "pregunta": "Coloración amarillenta de la piel por exceso de bilirrubina.",
+      "respuestas": [
+        "Ictericia"
+      ]
+    },
+    {
+      "letra": "J",
+      "pregunta": "Modelo ___ inducido: la enzima y el sustrato se adaptan entre sí para unirse.",
+      "respuestas": [
+        "Ajuste"
+      ],
+      "contiene": true
+    },
+    {
+      "letra": "L",
+      "pregunta": "Producto final del metabolismo de glúcidos que los músculos producen en esfuerzos intensos y que causa acidosis si se acumula.",
+      "respuestas": [
+        "Lactato"
+      ]
+    },
+    {
+      "letra": "M",
+      "pregunta": "Primera proteína en elevarse tras un infarto de miocardio.",
+      "respuestas": [
+        "Mioglobina"
+      ]
+    },
+    {
+      "letra": "N",
+      "pregunta": "Su presencia en la tira reactiva de orina indica infección bacteriana.",
+      "respuestas": [
+        "Nitritos"
+      ]
+    },
+    {
+      "letra": "O",
+      "pregunta": "Nombre que recibe un volumen de orina menor de 400 ml en 24 horas.",
+      "respuestas": [
+        "Oliguria"
+      ]
+    },
+    {
+      "letra": "P",
+      "pregunta": "Fracción líquida de la sangre (90 % agua) que contiene fibrinógeno; se obtiene con anticoagulante.",
+      "respuestas": [
+        "Plasma"
+      ]
+    },
+    {
+      "letra": "Q",
+      "pregunta": "___ clínica: estudio de los componentes químicos, orgánicos e inorgánicos, de los seres vivos.",
+      "respuestas": [
+        "Química",
+        "Quimica"
+      ]
+    },
+    {
+      "letra": "R",
+      "pregunta": "Órgano que filtra la sangre y forma la orina; sus unidades funcionales son las nefronas.",
+      "respuestas": [
+        "Riñón",
+        "Rinon"
+      ]
+    },
+    {
+      "letra": "S",
+      "pregunta": "Manifestación objetiva y cuantificable de una enfermedad, a diferencia del síntoma.",
+      "respuestas": [
+        "Signo"
+      ]
+    },
+    {
+      "letra": "T",
+      "pregunta": "Líquido pobre en proteínas causado por una presión hidrostática aumentada, no por inflamación.",
+      "respuestas": [
+        "Trasudado"
+      ]
+    },
+    {
+      "letra": "U",
+      "pregunta": "Pigmento responsable del color amarillo de la orina.",
+      "respuestas": [
+        "Urocromo"
+      ]
+    },
+    {
+      "letra": "V",
+      "pregunta": "Órgano en el que se forman los cálculos biliares (colelitiasis) por cristalización de la bilis.",
+      "respuestas": [
+        "Vesícula",
+        "Vesicula"
+      ]
+    },
+    {
+      "letra": "X",
+      "pregunta": "Los cálculos urinarios cálcicos más frecuentes (65 %) son de ___ cálcico.",
+      "respuestas": [
+        "Oxalato"
+      ],
+      "contiene": true
+    },
+    {
+      "letra": "Y",
+      "pregunta": "Radiación electromagnética descubierta en 1895, cuyo nombre lleva una incógnita (la letra X).",
+      "respuestas": [
+        "Rayos X",
+        "Rayosx"
+      ],
+      "contiene": true
+    },
+    {
+      "letra": "Z",
+      "pregunta": "Órgano en el que se destruyen los eritrocitos al final de su vida media.",
+      "respuestas": [
+        "Bazo"
+      ],
+      "contiene": true
+    }
+  ]
+}
